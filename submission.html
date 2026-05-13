@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXVOLT — Submission Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230c0c10'/><text x='16' y='22' font-size='20' text-anchor='middle' fill='%2300e5ff' font-family='sans-serif' font-weight='900'>N</text></svg>">
+  <style>
+    /* ── Submission page overrides ── */
+    .sub-hero {
+      padding: 5rem 2rem 3rem;
+      text-align: center;
+      background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(0,229,255,0.08) 0%, transparent 70%);
+    }
+    .sub-hero .hero-badge { margin-bottom: 1.2rem; }
+    .sub-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+    }
+    .sub-hero h1 em { color: var(--cyan); font-style: normal; }
+    .sub-hero p {
+      max-width: 640px;
+      margin: 0 auto 2.5rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .sub-launch {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2.2rem;
+      background: var(--cyan);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .sub-launch:hover { opacity: 0.85; }
+
+    /* ── Info grid ── */
+    .sub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+    .sub-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+    }
+    .sub-card h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+    }
+    .sub-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sub-card li {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .sub-card li:last-child { border-bottom: none; }
+    .sub-card li::before {
+      content: '—';
+      color: var(--cyan);
+      flex-shrink: 0;
+      font-size: 0.75rem;
+    }
+    .sub-card li strong { color: var(--text-primary); }
+
+    /* ── File tree ── */
+    .sub-tree {
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+    }
+    .sub-tree h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+    }
+    .tree-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem 2rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+    }
+    .tree-block .t-root   { color: var(--text-primary); font-weight: 700; }
+    .tree-block .t-folder { color: var(--cyan); }
+    .tree-block .t-file   { color: var(--text-muted); }
+    .tree-block .t-note   { color: rgba(255,255,255,0.3); font-size: 0.76rem; }
+
+    /* ── Links section ── */
+    .sub-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0 2rem 4rem;
+    }
+    .sub-links a {
+      padding: 0.65rem 1.6rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .sub-links a:hover { border-color: var(--cyan); color: var(--cyan); }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#sub-main">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="logo" aria-label="NEXVOLT">NEXVOLT</div>
+      <h1 class="site-title">Submission Overview</h1>
+      <nav class="header-nav" aria-label="Site navigation">
+        <a href="index.html" class="header-link">Launch Viewer</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="sub-main" tabindex="-1">
+
+    <!-- Hero -->
+    <div class="sub-hero">
+      <span class="hero-badge">University Assignment — 2026</span>
+      <h1>NEXVOLT <em>3D Product Viewer</em></h1>
+      <p>
+        A cinematic, interactive 3D product showcase built with Three.js and WebGL.
+        Renders three NEXVOLT energy drink variants in real-time with PBR materials,
+        image-based lighting, a custom GLSL rim-glow shader, and Unreal Engine-style
+        bloom post-processing — entirely in the browser with no server required.
+      </p>
+      <a href="index.html" class="sub-launch" aria-label="Launch the 3D viewer application">
+        Launch 3D Viewer &rarr;
+      </a>
+    </div>
+
+    <!-- Project details grid -->
+    <div class="sub-grid" role="list" aria-label="Project details">
+
+      <div class="sub-card" role="listitem">
+        <h3>Technology Stack</h3>
+        <ul>
+          <li><strong>Three.js r128</strong> — 3D rendering engine</li>
+          <li><strong>WebGL</strong> — GPU-accelerated rendering</li>
+          <li><strong>GLSL</strong> — Custom Fresnel rim shader</li>
+          <li><strong>EffectComposer</strong> — Bloom post-processing</li>
+          <li><strong>Web Audio API</strong> — Synthesised soundscape</li>
+          <li><strong>Vanilla JS / HTML5 / CSS3</strong></li>
+        </ul>
+      </div>
+
+      <div class="sub-card" role="listitem">
+        <h3>3D Models</h3>
+        <ul>
+          <li><strong>Slim Can</strong> — 250 ml aluminium energy can</li>
+          <li><strong>Sport Bottle</strong> — 500 ml ergonomic bottle</li>
+          <li><strong>Crushed Can</strong> — Deformed mesh with PBR</li>
+          <li>All models original — created in Blender 4.x</li>
+          <li>Exported as GLTF/GLB format</li>
+        </ul>
+      </div>
+
+      <div class="sub-card" role="listitem">
+        <h3>Rendering Features</h3>
+        <ul>
+          <li>PBR materials (metalness / roughness)</li>
+          <li>PMREM image-based lighting — no HDR file</li>
+          <li>ACES filmic tone mapping (exposure 0.95)</li>
+          <li>Custom GLSL Fresnel rim-glow overlay</li>
+          <li>Unreal Engine-style bloom (threshold 0.85)</li>
+          <li>Animated drop shadow with float sync</li>
+        </ul>
+      </div>
+
+      <div class="sub-card" role="listitem">
+        <h3>Interaction</h3>
+        <ul>
+          <li>OrbitControls — orbit, zoom, pan</li>
+          <li>Cinematic camera presets (Hero / Side / Top / Detail)</li>
+          <li>Model rotation buttons (±22.5°)</li>
+          <li>Zoom In / Zoom Out (15% steps)</li>
+          <li>Auto-rotation turntable</li>
+          <li>Wireframe / rim shader / bloom toggles</li>
+        </ul>
+      </div>
+
+      <div class="sub-card" role="listitem">
+        <h3>Accessibility (WCAG 2.1 AA)</h3>
+        <ul>
+          <li>Full keyboard navigation via Tab</li>
+          <li>aria-pressed on all toggle buttons</li>
+          <li>aria-live region for screen readers</li>
+          <li>Skip-to-main-content link</li>
+          <li>prefers-reduced-motion respected</li>
+          <li>44 × 44 px minimum touch targets</li>
+        </ul>
+      </div>
+
+      <div class="sub-card" role="listitem">
+        <h3>Performance</h3>
+        <ul>
+          <li>DPR capped at 2× (avoids 9× pixel cost)</li>
+          <li>GPU memory disposal on every model switch</li>
+          <li>Bloom bypasses EffectComposer when off</li>
+          <li>PMREM disposed immediately after use</li>
+          <li>Debounced resize (100 ms)</li>
+          <li>Page Visibility API pauses render loop</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- File structure tree -->
+    <div class="sub-tree">
+      <h2>Project Structure</h2>
+      <div class="tree-block" role="img" aria-label="Project folder structure">
+        <span class="t-root">3dapp/</span><br>
+        ├── <a href="index.html" style="color:inherit">index.html</a>
+          &nbsp;<span class="t-note">← main viewer</span><br>
+        ├── <a href="about.html" style="color:inherit">about.html</a>
+          &nbsp;<span class="t-note">← technical documentation</span><br>
+        ├── <a href="submission.html" style="color:inherit">submission.html</a>
+          &nbsp;<span class="t-note">← this page</span><br>
+        ├── README.md<br>
+        ├── <span class="t-folder">css/</span><br>
+        │&nbsp;&nbsp; └── style.css<br>
+        ├── <span class="t-folder">js/</span><br>
+        │&nbsp;&nbsp; ├── script.js &nbsp;<span class="t-note">← application logic</span><br>
+        │&nbsp;&nbsp; └── <span class="t-folder">libs/</span>
+          &nbsp;<span class="t-note">← Three.js r128 (local, no CDN)</span><br>
+        ├── <span class="t-folder">assets/</span><br>
+        │&nbsp;&nbsp; ├── <span class="t-folder">models/</span>
+          &nbsp;<span class="t-note">← GLB files (Blender exports)</span><br>
+        │&nbsp;&nbsp; ├── <span class="t-folder">textures/</span><br>
+        │&nbsp;&nbsp; ├── <span class="t-folder">images/</span><br>
+        │&nbsp;&nbsp; ├── <span class="t-folder">audio/</span><br>
+        │&nbsp;&nbsp; └── <span class="t-folder">video/</span>
+          &nbsp;<span class="t-note">← promo.mp4 (optional)</span><br>
+        ├── <span class="t-folder">blender-files/</span>
+          &nbsp;<span class="t-note">← .blend source files</span><br>
+        └── <span class="t-folder">docs/</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp; ├── references.txt<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; ├── originality.txt<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; └── <span class="t-folder">testing-evidence/</span>
+      </div>
+    </div>
+
+    <!-- Quick links -->
+    <nav class="sub-links" aria-label="Project pages">
+      <a href="index.html">3D Viewer</a>
+      <a href="about.html">Technical Documentation</a>
+      <a href="docs/references.txt">References</a>
+      <a href="docs/originality.txt">Originality Statement</a>
+      <a href="README.md">README</a>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand" aria-label="NEXVOLT">NEXVOLT</div>
+      <p class="footer-tagline">Pure Energy. Zero Limits.</p>
+      <div class="footer-divider" aria-hidden="true"></div>
+      <p class="footer-meta">
+        3D Web Application &nbsp;&bull;&nbsp; University Assignment &nbsp;&bull;&nbsp; 2026
+      </p>
+      <p class="footer-tech">
+        Built with THREE.js &nbsp;&bull;&nbsp; WebGL &nbsp;&bull;&nbsp; Vanilla JavaScript
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

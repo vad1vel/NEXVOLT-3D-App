@@ -1,0 +1,47 @@
+NEXVOLT 3D Product Viewer — Originality Statement
+===================================================
+
+I confirm that all work submitted as part of this university assignment
+is my own original work, except where clearly referenced.
+
+Code
+----
+All HTML, CSS, and JavaScript source files (index.html, about.html,
+css/style.css, js/script.js) were written from scratch by the author.
+
+The Three.js library (js/libs/) is a third-party open-source library
+used under its MIT Licence. All code that interacts with Three.js,
+including the custom GLSL Fresnel rim-glow shader, the PMREM environment
+map generator, the EffectComposer bloom pipeline, and the WebGL render
+loop, was authored by the student for this assignment.
+
+3D Models
+---------
+All three NEXVOLT product models (slim energy can, sport bottle, and
+crushed can) were modelled, UV-unwrapped, and exported to GLB format
+by the author using Blender 4.x. No pre-made or downloaded model assets
+were used.
+
+Design
+------
+The NEXVOLT brand identity, colour palette, typography choices, and
+overall visual design are original creative work produced for this
+project. NEXVOLT is a fictional brand created solely for this
+educational assignment.
+
+Audio
+-----
+All audio in the application is synthesised programmatically at runtime
+using the Web Audio API. No external audio files or samples were used.
+
+External Libraries (acknowledged)
+----------------------------------
+- Three.js r128 (MIT) — https://threejs.org
+- Poppins typeface (OFL) — https://fonts.google.com/specimen/Poppins
+
+No other external code, templates, starter kits, or frameworks were used.
+
+Signed: Vad Moutou
+Date:   2026
+Module: H7006: Web 3D Applications
+

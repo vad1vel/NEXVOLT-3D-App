@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXVOLT — 3D Product Viewer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230c0c10'/><text x='16' y='22' font-size='20' text-anchor='middle' fill='%2300e5ff' font-family='sans-serif' font-weight='900'>N</text></svg>">
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════
+       SITE LOADING SCREEN
+       Full-page overlay shown until the first model resolves.
+       JS calls dismissSiteLoading() in onLoad / onError.
+  ════════════════════════════════════════════════════════ -->
+  <div id="site-loading" role="status" aria-live="polite" aria-label="Loading NEXVOLT application">
+    <div class="sl-particles" aria-hidden="true">
+      <span class="sl-p"></span>
+      <span class="sl-p"></span>
+      <span class="sl-p"></span>
+      <span class="sl-p"></span>
+      <span class="sl-p"></span>
+      <span class="sl-p"></span>
+      <span class="sl-p"></span>
+      <span class="sl-p"></span>
+      <span class="sl-p"></span>
+      <span class="sl-p"></span>
+    </div>
+    <div class="sl-inner">
+      <div class="sl-logo" aria-hidden="true">NEXVOLT</div>
+      <p class="sl-tagline" aria-hidden="true">PURE ENERGY. ZERO LIMITS.</p>
+      <div class="sl-bar-wrap" aria-hidden="true">
+        <div class="sl-bar-fill" id="sl-bar"></div>
+      </div>
+      <p class="sl-status">
+        <span class="sl-status-text" id="sl-msg">INITIALISING NEXVOLT SYSTEM</span>
+        <span class="sl-dot" aria-hidden="true">.</span>
+        <span class="sl-dot" aria-hidden="true">.</span>
+        <span class="sl-dot" aria-hidden="true">.</span>
+      </p>
+    </div>
+  </div>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="logo" aria-label="NEXVOLT">NEXVOLT</div>
+      <h1 class="site-title">3D Product Viewer</h1>
+      <nav class="header-nav" aria-label="Site navigation">
+        <p class="site-subtitle" aria-hidden="true">Drag&nbsp;&middot;&nbsp;Scroll&nbsp;&middot;&nbsp;Explore</p>
+        <a href="about.html" class="header-link">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-glow"    aria-hidden="true"></div>
+    <div class="hero-circles" aria-hidden="true">
+      <div class="hero-circle"></div>
+      <div class="hero-circle"></div>
+      <div class="hero-circle"></div>
+    </div>
+    <div class="hero-inner">
+      <span class="hero-badge">Est. 2026</span>
+      <h2 class="hero-title" id="hero-heading">
+        Experience the<br>
+        <em class="hero-accent">Pure Energy</em>
+      </h2>
+      <p class="hero-desc">
+        Explore the NEXVOLT product range in real&#8209;time 3D.
+        Rotate, zoom, and inspect every detail with interactive WebGL rendering.
+      </p>
+      <a href="#main-content" class="btn btn-hero">
+        Explore 3D Model
+        <span class="btn-arrow" aria-hidden="true"></span>
+      </a>
+    </div>
+  </section>
+
+  <main class="main-content" id="main-content" tabindex="-1">
+
+    <div id="viewer-container" role="region" aria-label="Interactive 3D model viewer">
+      <div id="loading-overlay" role="status" aria-live="polite">
+        <div class="loader-ring" aria-hidden="true"></div>
+        <p class="loader-text">Loading model&hellip;</p>
+        <div class="progress-track" aria-hidden="true">
+          <div id="progress-bar" class="progress-fill"></div>
+        </div>
+        <span id="progress-pct" class="progress-pct">0%</span>
+      </div>
+    </div>
+
+    <section class="controls-panel" aria-label="3D viewer controls">
+      <div class="controls-groups">
+
+        <div class="control-group">
+          <h3 class="group-label" id="lbl-model">Model</h3>
+          <div class="group-buttons" role="group" aria-labelledby="lbl-model">
+            <button id="btn-model-slim"    class="btn btn-model active"
+                    aria-pressed="true"  aria-label="Load slim energy can">Slim Can</button>
+            <button id="btn-model-bottle"  class="btn btn-model"
+                    aria-pressed="false" aria-label="Load sport bottle">Bottle</button>
+            <button id="btn-model-crushed" class="btn btn-model"
+                    aria-pressed="false" aria-label="Load crushed can">Crushed</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h3 class="group-label" id="lbl-camera">Camera</h3>
+          <div class="group-buttons" role="group" aria-labelledby="lbl-camera">
+            <button id="btn-rotate"   class="btn btn-primary"
+                    aria-pressed="false" aria-label="Toggle automatic camera rotation">Auto Rotation</button>
+            <button id="btn-reset"    class="btn btn-secondary"
+                    aria-label="Reset camera to default position">Reset View</button>
+            <button id="btn-zoom-in"  class="btn btn-icon"
+                    aria-label="Zoom in">&#xFF0B; Zoom In</button>
+            <button id="btn-zoom-out" class="btn btn-icon"
+                    aria-label="Zoom out">&#xFF0D; Zoom Out</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h3 class="group-label" id="lbl-presets">Camera Presets</h3>
+          <div class="group-buttons" role="group" aria-labelledby="lbl-presets">
+            <button id="btn-preset-hero"   class="btn btn-preset"
+                    aria-pressed="false" aria-label="Hero camera view — three-quarter showcase angle">Hero</button>
+            <button id="btn-preset-side"   class="btn btn-preset"
+                    aria-pressed="false" aria-label="Side camera view — product profile">Side</button>
+            <button id="btn-preset-top"    class="btn btn-preset"
+                    aria-pressed="false" aria-label="Top camera view — overhead perspective">Top</button>
+            <button id="btn-preset-detail" class="btn btn-preset"
+                    aria-pressed="false" aria-label="Detail camera view — close-up angled shot">Detail</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h3 class="group-label" id="lbl-rotate">Rotate Model</h3>
+          <div class="group-buttons" role="group" aria-labelledby="lbl-rotate">
+            <button id="btn-rot-left"  class="btn btn-icon"
+                    aria-label="Rotate model left by 22 degrees">&#9664; Left</button>
+            <button id="btn-rot-right" class="btn btn-icon"
+                    aria-label="Rotate model right by 22 degrees">Right &#9654;</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h3 class="group-label" id="lbl-view">View</h3>
+          <div class="group-buttons" role="group" aria-labelledby="lbl-view">
+            <button id="btn-wireframe" class="btn btn-icon"
+                    aria-pressed="false" aria-label="Toggle wireframe rendering mode">Wireframe Mode</button>
+            <button id="btn-glow"      class="btn btn-icon"
+                    aria-pressed="false" aria-label="Toggle GLSL Fresnel rim glow shader">GLSL Rim Shader</button>
+            <button id="btn-bloom"     class="btn btn-icon"
+                    aria-pressed="false" aria-label="Toggle Unreal bloom post-processing">Bloom</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h3 class="group-label" id="lbl-light">Lighting</h3>
+          <div class="group-buttons" role="group" aria-labelledby="lbl-light">
+            <button id="btn-lights" class="btn btn-icon"
+                    aria-pressed="true" aria-label="Toggle studio lighting on or off">Studio Lights</button>
+          </div>
+          <div class="slider-row">
+            <label class="slider-label" for="slider-intensity">Intensity</label>
+            <input  type="range" id="slider-intensity" class="slider"
+                    min="0" max="3" step="0.1" value="1"
+                    aria-label="Light intensity"
+                    aria-valuemin="0" aria-valuemax="3" aria-valuenow="1" />
+            <span id="intensity-value" class="slider-value" aria-live="polite">1.0</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h3 class="group-label" id="lbl-audio">Audio</h3>
+          <div class="group-buttons" role="group" aria-labelledby="lbl-audio">
+            <button id="btn-ambient" class="btn btn-icon"
+                    aria-pressed="false" aria-label="Toggle ambient audio">Ambient Audio</button>
+          </div>
+        </div>
+
+      </div>
+      <p class="controls-hint">
+        Drag to orbit &nbsp;&middot;&nbsp; Scroll to zoom &nbsp;&middot;&nbsp; Right&#8209;click to pan
+      </p>
+    </section>
+
+    <!-- Screen-reader live region — srAnnounce() writes here. Visually hidden. -->
+    <span id="sr-announce" class="sr-only"
+          role="status" aria-live="polite" aria-atomic="true"></span>
+
+  </main>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       MODEL GALLERY — visual selector for all three products
+  ════════════════════════════════════════════════════════ -->
+  <section class="model-gallery" aria-labelledby="gallery-heading">
+
+    <div class="section-header animate-on-scroll">
+      <h2 class="section-title" id="gallery-heading">Product Range</h2>
+      <div class="section-line" aria-hidden="true"></div>
+      <p class="section-subtitle">
+        Three distinct NEXVOLT products &mdash; click any card to load it in the viewer above
+      </p>
+    </div>
+
+    <div class="gallery-grid">
+
+      <article class="gallery-card animate-on-scroll" aria-label="Slim Energy Can">
+        <div class="gallery-thumb gallery-thumb--slim" aria-hidden="true">
+          <div class="gallery-thumb-icon gallery-icon--can"></div>
+        </div>
+        <div class="gallery-info">
+          <h3 class="gallery-title">Slim Can</h3>
+          <p class="gallery-desc">250 ml slim aluminium energy can. Tall, lightweight body with ergonomic grip zones and a brushed metallic finish.</p>
+          <button class="btn btn-secondary" data-gallery-model="slim"
+                  aria-label="Load slim can in the 3D viewer">Load in Viewer</button>
+        </div>
+      </article>
+
+      <article class="gallery-card animate-on-scroll" aria-label="Sport Bottle">
+        <div class="gallery-thumb gallery-thumb--bottle" aria-hidden="true">
+          <div class="gallery-thumb-icon gallery-icon--bottle"></div>
+        </div>
+        <div class="gallery-info">
+          <h3 class="gallery-title">Sport Bottle</h3>
+          <p class="gallery-desc">500 ml ergonomic plastic sport bottle. Contoured grip, flip&#8209;top cap, and a frosted translucent body showing liquid level.</p>
+          <button class="btn btn-secondary" data-gallery-model="bottle"
+                  aria-label="Load sport bottle in the 3D viewer">Load in Viewer</button>
+        </div>
+      </article>
+
+      <article class="gallery-card animate-on-scroll" aria-label="Crushed Can">
+        <div class="gallery-thumb gallery-thumb--crushed" aria-hidden="true">
+          <div class="gallery-thumb-icon gallery-icon--crushed"></div>
+        </div>
+        <div class="gallery-info">
+          <h3 class="gallery-title">Crushed Can</h3>
+          <p class="gallery-desc">Deformed aluminium &mdash; procedural mesh damage demonstrating the material&rsquo;s real&#8209;world plastic deformation and complex irregular geometry.</p>
+          <button class="btn btn-secondary" data-gallery-model="crushed"
+                  aria-label="Load crushed can in the 3D viewer">Load in Viewer</button>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       PROMO VIDEO
+  ════════════════════════════════════════════════════════ -->
+  <section class="promo-video" aria-labelledby="video-heading">
+    <div class="promo-video-inner">
+
+      <div class="promo-text animate-on-scroll">
+        <span class="hero-badge">Now Playing</span>
+        <h2 class="section-title" id="video-heading">The NEXVOLT Experience</h2>
+        <p class="promo-subtitle">High&#8209;energy performance for every moment &mdash; see the full product story.</p>
+      </div>
+
+      <div class="video-wrapper animate-on-scroll">
+        <img src="assets/video/nexvolt-promo-banner.png"
+             alt="NEXVOLT promotional banner">
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       PRODUCT INFO
+  ════════════════════════════════════════════════════════ -->
+  <section class="product-info" aria-labelledby="product-heading">
+
+    <div class="section-header animate-on-scroll">
+      <h2 class="section-title" id="product-heading">Product Details</h2>
+      <div class="section-line" aria-hidden="true"></div>
+      <p class="section-subtitle">
+        The technology and craft behind every NEXVOLT product
+      </p>
+    </div>
+
+    <div class="cards-grid">
+
+      <article class="card animate-on-scroll" aria-label="Premium Materials">
+        <div class="card-icon-wrap" aria-hidden="true">
+          <div class="card-icon"></div>
+        </div>
+        <h3 class="card-title">Premium Materials</h3>
+        <p class="card-text">
+          Every NEXVOLT can is precision&#8209;drawn from food&#8209;grade aluminium alloy,
+          with a polymer inner lining that preserves the formula and a high&#8209;definition
+          lithographic print applied at 600 dpi.
+        </p>
+      </article>
+
+      <article class="card animate-on-scroll" aria-label="Signature Design">
+        <div class="card-icon-wrap" aria-hidden="true">
+          <div class="card-icon"></div>
+        </div>
+        <h3 class="card-title">Signature Design</h3>
+        <p class="card-text">
+          The slim 250 ml silhouette was purpose&#8209;built for one&#8209;handed grip. The
+          angular shoulder taper and embossed NEXVOLT wordmark are registered design
+          elements, recognisable at a glance.
+        </p>
+      </article>
+
+      <article class="card animate-on-scroll" aria-label="Real-Time 3D technology">
+        <div class="card-icon-wrap" aria-hidden="true">
+          <div class="card-icon"></div>
+        </div>
+        <h3 class="card-title">Real&#8209;Time 3D</h3>
+        <p class="card-text">
+          Powered by THREE.js and WebGL, this viewer renders PBR materials with
+          image&#8209;based lighting, a custom GLSL rim&#8209;glow shader, ACES filmic tone
+          mapping, and Unreal-Engine-style bloom post&#8209;processing — entirely in the browser.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand" aria-label="NEXVOLT">NEXVOLT</div>
+      <p class="footer-tagline">Pure Energy. Zero Limits.</p>
+      <div class="footer-divider" aria-hidden="true"></div>
+      <p class="footer-meta">
+        3D Web Application &nbsp;&bull;&nbsp; University Assignment &nbsp;&bull;&nbsp; 2026
+      </p>
+      <p class="footer-tech">
+        Built with THREE.js &nbsp;&bull;&nbsp; WebGL &nbsp;&bull;&nbsp; Vanilla JavaScript
+      </p>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="about.html" class="footer-link">About This Project</a>
+      </nav>
+      <p class="footer-disclaimer">
+        NEXVOLT is a fictional brand created for educational purposes. All 3D models are original work.
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- THREE.js core -->
+  <script src="js/libs/three.min.js"></script>
+  <script src="js/libs/GLTFLoader.js"></script>
+  <script src="js/libs/OrbitControls.js"></script>
+
+  <!-- Post-processing pipeline (load order matters — each file extends THREE) -->
+  <script src="js/libs/CopyShader.js"></script>
+  <script src="js/libs/LuminosityHighPassShader.js"></script>
+  <script src="js/libs/EffectComposer.js"></script>
+  <script src="js/libs/ShaderPass.js"></script>
+  <script src="js/libs/RenderPass.js"></script>
+  <script src="js/libs/UnrealBloomPass.js"></script>
+
+  <script src="js/script.js"></script>
+
+</body>
+</html>

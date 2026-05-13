@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — NEXVOLT 3D Viewer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230c0c10'/><text x='16' y='22' font-size='20' text-anchor='middle' fill='%2300e5ff' font-family='sans-serif' font-weight='900'>N</text></svg>">
+</head>
+<body>
+
+  <a class="skip-link" href="#about-content">Skip to main content</a>
+
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="logo" aria-label="NEXVOLT — back to viewer">NEXVOLT</a>
+      <h1 class="site-title">About This Project</h1>
+      <nav class="header-nav" aria-label="Site navigation">
+        <a href="index.html" class="header-link">&larr; Viewer</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <main class="about-content" id="about-content" tabindex="-1">
+
+    <!-- ── Hero ─────────────────────────────────────────────────── -->
+    <div class="about-hero">
+      <div class="about-hero-inner">
+        <span class="hero-badge">University Assignment</span>
+        <h2 class="hero-title">Design Documentation</h2>
+        <p class="hero-desc">
+          A full technical and design rationale for the NEXVOLT 3D Product Viewer &mdash;
+          covering modelling, lighting, accessibility, interaction design, and performance.
+        </p>
+      </div>
+    </div>
+
+
+    <!-- ── 01. MODELLING CHOICES ────────────────────────────────── -->
+    <section class="about-section" aria-labelledby="sec-models">
+      <div class="about-section-inner">
+
+        <div class="about-section-tag">01</div>
+        <h2 id="sec-models">Modelling Choices</h2>
+
+        <h3>Three Geometrically Distinct Models</h3>
+        <p>The assignment requires at least three 3D models with different geometry. Each
+        NEXVOLT product was designed with a distinct mesh topology to demonstrate variety
+        in both shape and construction technique:</p>
+
+        <div class="about-cards">
+          <div class="about-card">
+            <h4>Slim Energy Can</h4>
+            <p>Cylindrical body with a bevelled shoulder taper, recessed neck, and dome-base
+            geometry typical of food-grade aluminium cans. Loop topology on the waist allows
+            clean edge-loop subdivision without pinching. Approx. 4&thinsp;000 triangles.
+            Material: brushed aluminium (metalness 0.95, roughness 0.28).</p>
+          </div>
+          <div class="about-card">
+            <h4>Sport Bottle</h4>
+            <p>Organic contoured surface modelled with Subdivision Surface modifier then
+            applied. The flip-cap is a separate mesh for independent material assignment.
+            Frosted body uses Principled BSDF with Transmission = 0.35, Roughness = 0.65
+            to simulate semi-opaque HDPE plastic. Approx. 8&thinsp;000 triangles.</p>
+          </div>
+          <div class="about-card">
+            <h4>Crushed Can</h4>
+            <p>Derived from the slim can base mesh. A Proportional Editing deformation pass
+            followed by freeform sculpting (Grab brush) simulates real aluminium buckling &mdash;
+            the deliberately chaotic, irregular geometry demonstrates the viewer&rsquo;s
+            ability to handle non-uniform meshes. Approx. 6&thinsp;500 triangles.</p>
+          </div>
+        </div>
+
+        <h3>Why GLB (Binary GLTF)?</h3>
+        <ul class="about-list">
+          <li><strong>Single binary file</strong> &mdash; textures, geometry, and PBR material
+          data are embedded in one HTTP request, avoiding the multi-file round-trips
+          required by OBJ + MTL.</li>
+          <li><strong>PBR-native</strong> &mdash; GLTF 2.0&rsquo;s Metalness/Roughness material
+          model maps directly to <code>MeshStandardMaterial</code> in THREE.js with no
+          conversion layer.</li>
+          <li><strong>Compact</strong> &mdash; binary encoding is typically 30&ndash;40&thinsp;%
+          smaller than ASCII OBJ for identical geometry. Optional Draco compression reduces
+          it by a further 60&ndash;80&thinsp;%.</li>
+        </ul>
+
+        <h3>Where to Place the GLB Files</h3>
+        <p>The models are stored inside the project&rsquo;s <code>assets/models/</code>
+        folder. Place the three exported files at:</p>
+        <ul class="about-list">
+          <li><code>assets/models/nexvolt_slim_can.glb</code></li>
+          <li><code>assets/models/nexvolt_bottle.glb</code></li>
+          <li><code>assets/models/nexvolt_crushed.glb</code></li>
+        </ul>
+
+        <h3>Blender Export Guide</h3>
+        <ol class="about-list about-list--ordered">
+          <li>Apply all modifiers and transforms: <kbd>Object &rarr; Apply &rarr; All Transforms</kbd>.</li>
+          <li>Select the objects to export.</li>
+          <li><kbd>File &rarr; Export &rarr; glTF 2.0 (.glb/.gltf)</kbd>.</li>
+          <li>Format: <strong>glTF Binary (.glb)</strong>.</li>
+          <li>Enable: <em>Selected Objects</em>, <em>Apply Modifiers</em>, <em>UVs</em>,
+          <em>Normals</em>, <em>Vertex Colors</em>, <em>Materials</em>.</li>
+          <li>Under <em>Geometry</em>: enable <em>Apply Modifiers</em> if not already applied.</li>
+          <li>Optional: enable <em>Draco mesh compression</em> for smaller files (requires
+          <code>DRACOLoader</code> in the THREE.js loader setup).</li>
+          <li>Click <em>Export glTF 2.0</em>.</li>
+        </ol>
+
+        <div class="about-note">
+          <strong>Run through a local server.</strong> Opening <code>index.html</code> directly
+          as a <code>file://</code> URL blocks the browser&rsquo;s <code>fetch()</code> API.
+          GLTFLoader will silently fail. Use VS Code Live Server, <code>python -m http.server</code>,
+          or <code>npx serve .</code> from the project directory.
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ── 02. LIGHTING SETUP ────────────────────────────────────── -->
+    <section class="about-section about-section--alt" aria-labelledby="sec-lights">
+      <div class="about-section-inner">
+
+        <div class="about-section-tag">02</div>
+        <h2 id="sec-lights">Lighting Setup</h2>
+
+        <h3>Four-Point Studio Rig</h3>
+        <p>The scene uses a classic product-photography lighting setup implemented
+        with THREE.js <code>DirectionalLight</code> and <code>AmbientLight</code>:</p>
+
+        <div class="about-cards">
+          <div class="about-card">
+            <h4>Ambient (0.5&times;)</h4>
+            <p>Omnidirectional baseline that prevents surfaces in shadow from going
+            completely black. Intensity is deliberately low to preserve contrast &mdash;
+            higher values flatten the perceived 3D form.</p>
+          </div>
+          <div class="about-card">
+            <h4>Key Light (2.0&times;, warm)</h4>
+            <p>Main light from upper-right (4, 9, 5). Warm tint (<code>#fff8f0</code>)
+            simulates a tungsten studio softbox at a 45&deg; angle &mdash; the standard
+            &ldquo;Rembrandt&rdquo; position for crisp highlights on metallic surfaces.</p>
+          </div>
+          <div class="about-card">
+            <h4>Fill Light (0.6&times;, cool)</h4>
+            <p>Cool blue-white (<code>#f0f5ff</code>) from the left (&minus;5, 3, &minus;2).
+            Complementary colour temperature to the warm key, keeping shadow areas
+            from looking muddy while preserving depth.</p>
+          </div>
+          <div class="about-card">
+            <h4>Rim Light (1.0&times;, white)</h4>
+            <p>Pure white back-light from directly behind (0, 5, &minus;7). Creates the
+            bright edge highlight that separates the product from the dark background &mdash;
+            a hallmark of premium commercial product photography.</p>
+          </div>
+        </div>
+
+        <h3>PMREM Image-Based Lighting</h3>
+        <p>A <code>PMREMGenerator</code> converts a hand-painted equirectangular canvas panorama
+        into a pre-filtered environment cube map. This provides physically-correct specular
+        highlights and reflections via Image-Based Lighting (IBL) at zero runtime cost &mdash;
+        the map is baked once during scene initialisation and the generator is disposed
+        immediately to free GPU memory.</p>
+        <p>The canvas panorama depicts a dark studio ceiling (gradient grey) with two additive
+        soft-box patches &mdash; warm key-side and cool fill-side &mdash; so metallic surface
+        reflections remain visually consistent with the scene&rsquo;s direct light rig.</p>
+
+        <h3>ACES Filmic Tone Mapping</h3>
+        <p><code>THREE.ACESFilmicToneMapping</code> with <code>toneMappingExposure = 0.95</code>
+        applies the Academy Color Encoding System&rsquo;s filmic contrast curve to the HDR
+        render buffer. This preserves metallic highlight detail (avoiding blown-out hotspots),
+        lifts shadows for visibility, and produces the warm-contrast look of cinema rather
+        than the flat output of linear tone mapping.</p>
+
+        <h3>Per-Load Material Enhancement</h3>
+        <p>After each GLB loads, every mesh is traversed and its material adjusted:
+        <code>envMapIntensity = 0.55</code> controls how strongly the studio environment
+        contributes to reflections. For already-metallic surfaces (<code>metalness &gt; 0.35</code>),
+        roughness is clamped to the 0.22&ndash;0.40 brushed-aluminium range &mdash; sharp
+        enough for distinct highlights, soft enough to avoid a mirror-like look.</p>
+
+      </div>
+    </section>
+
+
+    <!-- ── 03. ACCESSIBILITY ─────────────────────────────────────── -->
+    <section class="about-section" aria-labelledby="sec-a11y">
+      <div class="about-section-inner">
+
+        <div class="about-section-tag">03</div>
+        <h2 id="sec-a11y">Accessibility &mdash; WCAG 2.1 AA</h2>
+
+        <h3>Perceivable</h3>
+        <ul class="about-list">
+          <li><strong>Text alternatives</strong> &mdash; every interactive element has an
+          <code>aria-label</code> describing its action. All decorative elements
+          carry <code>aria-hidden="true"</code> so screen readers skip them.</li>
+          <li><code>aria-live="polite"</code> on the loading overlay means screen readers
+          announce model-loading status without interrupting the user&rsquo;s current reading.</li>
+          <li>Colour contrast &mdash; all body text meets the 4.5:1 minimum ratio. The red
+          accent on dark backgrounds meets the 3:1 large-text threshold.</li>
+        </ul>
+
+        <h3>Operable</h3>
+        <ul class="about-list">
+          <li><strong>Skip link</strong> &mdash; a &ldquo;Skip to main content&rdquo; link
+          appears on first <kbd>Tab</kbd> keypress, bypassing the header and landing focus
+          inside the 3D viewer region.</li>
+          <li><strong>Focus indicators</strong> &mdash; <code>:focus-visible</code> shows a 2&thinsp;px
+          red outline on keyboard-navigated elements only; mouse users never see it.</li>
+          <li><strong>Touch targets</strong> &mdash; on screens &le; 600&thinsp;px all buttons
+          receive a minimum height of 44&thinsp;px (WCAG 2.5.5). The 300&thinsp;ms iOS tap delay
+          is removed via <code>touch-action: manipulation</code>.</li>
+          <li><strong>ARIA landmarks</strong> &mdash; <code>role="banner"</code>,
+          <code>role="main"</code>, <code>role="region"</code>, and <code>role="contentinfo"</code>
+          allow screen-reader users to jump directly between page sections.</li>
+        </ul>
+
+        <h3>Understandable</h3>
+        <ul class="about-list">
+          <li><strong>Toggle semantics</strong> &mdash; wireframe, auto-rotate, lights, glow,
+          and ambient buttons all use <code>aria-pressed</code> to communicate on/off state.
+          The visible text label also changes to match (e.g. &ldquo;Wireframe&rdquo; &harr;
+          &ldquo;Solid Mode&rdquo;).</li>
+          <li><strong>Range slider</strong> &mdash; the intensity input has explicit
+          <code>aria-valuemin</code>, <code>aria-valuemax</code>, and <code>aria-valuenow</code>
+          attributes. The adjacent value display uses <code>aria-live="polite"</code> so the
+          number is announced after each adjustment.</li>
+        </ul>
+
+        <h3>Robust</h3>
+        <ul class="about-list">
+          <li><strong>prefers-reduced-motion</strong> &mdash; detected once at startup. When true:
+          page fade-in animation is suppressed; hero decorative circles are stopped; the
+          floating model animation is disabled (model stays stationary); all scroll-triggered
+          fade/slide transitions are bypassed so elements start fully visible.</li>
+          <li>Semantic HTML5 elements (<code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>,
+          <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;footer&gt;</code>,
+          <code>&lt;nav&gt;</code>) provide meaningful document structure without relying on ARIA
+          overrides.</li>
+        </ul>
+
+      </div>
+    </section>
+
+
+    <!-- ── 04. INTERACTION DESIGN ────────────────────────────────── -->
+    <section class="about-section about-section--alt" aria-labelledby="sec-interaction">
+      <div class="about-section-inner">
+
+        <div class="about-section-tag">04</div>
+        <h2 id="sec-interaction">Interaction Design</h2>
+
+        <h3>Orbit Controls with Damping</h3>
+        <p><code>OrbitControls</code> with <code>enableDamping = true</code> and
+        <code>dampingFactor = 0.05</code> adds physical inertia to camera movement &mdash;
+        releasing a drag continues the motion briefly before settling. This is a standard
+        technique from game cameras that gives the viewer a premium, &ldquo;physical&rdquo; feel.
+        Polar angle limits (<code>maxPolarAngle = 0.8&pi;</code>, <code>minPolarAngle = 0.1&pi;</code>)
+        prevent the camera from going below the ground plane or directly overhead.</p>
+
+        <h3>Floating Animation</h3>
+        <p>The model gently hovers on a sine wave: <code>sin(t &times; 0.45) &times; 0.022</code>.
+        This is a common product-landing-page technique that adds a sense of &ldquo;life&rdquo; to
+        an otherwise static object. The amplitude (0.022 world units) and frequency (0.45 rad/s
+        &asymp; one cycle per 14&thinsp;s) were tuned so the motion is subliminal &mdash; felt
+        but not consciously noticed. The drop shadow inversely scales with float height,
+        reinforcing the physical illusion.</p>
+
+        <h3>Smooth Camera Reset</h3>
+        <p>&ldquo;Reset Camera&rdquo; does not snap &mdash; it sets an <code>isCameraResetting</code>
+        flag that the animation loop polls each frame. When active, the camera lerps toward the
+        default position with factor 0.07, reaching it in approximately 0.5&thinsp;s at 60&thinsp;fps.
+        A <code>controls.addEventListener('start')</code> listener cancels the lerp the moment
+        the user grabs the camera, preventing the animation from fighting user input.</p>
+
+        <h3>Rim Glow Shader &mdash; Custom GLSL (Deeper Understanding Feature)</h3>
+        <p>Activating the <strong>Glow</strong> button applies a custom GLSL shader to every
+        mesh in the model. The shader renders a <code>THREE.BackSide</code> copy of each mesh
+        at 1.12&times; scale, tinted red using the Fresnel rim formula:</p>
+        <pre class="about-code"><code>float rim = 1.0 - abs( dot( normalize(vNormal), normalize(vViewPosition) ) );
+rim = pow( rim, glowPower );
+gl_FragColor = vec4( glowColor * rim, rim );</code></pre>
+        <p>The dot product between the surface normal and view direction is 1 at surfaces facing
+        the camera (no glow) and approaches 0 at grazing angles (maximum glow), producing the
+        characteristic rim-lighting silhouette. <code>AdditiveBlending</code> composites the
+        glow without clipping &mdash; it adds light energy, never darkens. Glow meshes are
+        attached as children of their parent meshes so they inherit transforms automatically;
+        they are disposed on model swap or toggle-off to prevent GPU memory leaks.</p>
+
+        <h3>Audio Feedback</h3>
+        <p>All buttons play a short synthesised tone via the Web Audio API, created lazily on
+        first user interaction (browser autoplay policy). Two tones exist: a high-pitched tick
+        (900&thinsp;Hz, 70&thinsp;ms) for general buttons, and a rising two-note glide
+        (360&rarr;720&thinsp;Hz, 220&thinsp;ms) for model switches. The <strong>Ambient Sound</strong>
+        toggle activates a continuous atmospheric hum from three oscillators (38&thinsp;Hz sawtooth
+        + 76&thinsp;Hz sine + 114&thinsp;Hz triangle) filtered through a 220&thinsp;Hz lowpass,
+        fading in over 1.8&thinsp;s to avoid a jarring onset.</p>
+
+        <h3>Model Gallery &amp; Scroll Animations</h3>
+        <p>The gallery &ldquo;Load in Viewer&rdquo; buttons call the same
+        <code>switchModel()</code> function as the control-panel buttons and programmatically
+        scroll the viewer back into view. Product and gallery cards use
+        <code>IntersectionObserver</code> to trigger a CSS fade-up transition when they enter
+        the viewport (threshold 12&thinsp;%), with a 120&thinsp;ms stagger per card for a
+        cascading reveal effect. The observer unregisters each element after its first trigger
+        so the animation runs exactly once.</p>
+
+      </div>
+    </section>
+
+
+    <!-- ── 05. PERFORMANCE ───────────────────────────────────────── -->
+    <section class="about-section" aria-labelledby="sec-perf">
+      <div class="about-section-inner">
+
+        <div class="about-section-tag">05</div>
+        <h2 id="sec-perf">Performance Optimisations</h2>
+
+        <div class="about-cards">
+          <div class="about-card">
+            <h4>Pixel Ratio Cap (2&times;)</h4>
+            <p><code>Math.min(window.devicePixelRatio, 2)</code> &mdash; a 3&times; DPR phone
+            would render 9&times; the pixels of a 1&times; screen for no visible gain above 2&times;.
+            Re-evaluated on every resize in case the window moves to a different monitor.</p>
+          </div>
+          <div class="about-card">
+            <h4>Page Visibility API</h4>
+            <p>When the tab hides, <code>cancelAnimationFrame(animFrameId)</code> stops the
+            render loop entirely. On restore, <code>clock.getDelta()</code> discards the
+            accumulated hidden time, preventing a time-jump that would snap the float animation.</p>
+          </div>
+          <div class="about-card">
+            <h4>PMREM Disposal</h4>
+            <p>The <code>PMREMGenerator</code> and its source equirectangular texture are
+            disposed immediately after the environment map is baked, freeing GPU shader
+            programs and pixel buffers that will never be needed again.</p>
+          </div>
+          <div class="about-card">
+            <h4>Canvas-Based Textures</h4>
+            <p>Scene background and drop shadow are painted onto HTML <code>&lt;canvas&gt;</code>
+            elements at startup and wrapped in <code>CanvasTexture</code>. No image files to
+            fetch, no shadow render pass, no extra draw calls per frame.</p>
+          </div>
+          <div class="about-card">
+            <h4>Debounced Resize Handler</h4>
+            <p>Waits 100&thinsp;ms after the final resize event before recalculating aspect
+            ratio and renderer dimensions. Without debouncing, dragging a window border fires
+            hundreds of events per second, each triggering a full GPU resize.</p>
+          </div>
+          <div class="about-card">
+            <h4>will-change: transform</h4>
+            <p>Applied to animatable card and gallery elements. This CSS hint promotes them
+            to their own compositor layer before any interaction, so hover transforms are
+            handled by the GPU compositor rather than triggering a CSS repaint.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ── 06. RUBRIC ALIGNMENT ──────────────────────────────────── -->
+    <section class="about-section about-section--alt" aria-labelledby="sec-rubric">
+      <div class="about-section-inner">
+
+        <div class="about-section-tag">06</div>
+        <h2 id="sec-rubric">Rubric Alignment</h2>
+        <p>The following table maps each project feature to the rubric category it directly addresses:</p>
+
+        <div class="rubric-table-wrap">
+          <table class="rubric-table">
+            <thead>
+              <tr>
+                <th>Feature / Implementation</th>
+                <th>Rubric Category</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>3 GLB models &mdash; distinct geometries (slim can, bottle, crushed can)</td>
+                <td>Multiple 3D models; different geometry requirement</td>
+              </tr>
+              <tr>
+                <td>GLTFLoader + OrbitControls + model switcher</td>
+                <td>Interaction; model loading; THREE.js usage</td>
+              </tr>
+              <tr>
+                <td>4-point studio lighting + PMREM IBL</td>
+                <td>Lighting design; technical depth</td>
+              </tr>
+              <tr>
+                <td>Custom GLSL rim-glow shader (Fresnel)</td>
+                <td>Deeper understanding; custom shaders</td>
+              </tr>
+              <tr>
+                <td>ACES filmic tone mapping + per-load PBR material tuning</td>
+                <td>Rendering quality; technical depth</td>
+              </tr>
+              <tr>
+                <td>Web Audio API &mdash; synthesised button tones + ambient sound toggle</td>
+                <td>Media integration; audio</td>
+              </tr>
+              <tr>
+                <td>HTML5 <code>&lt;video&gt;</code> section with poster image</td>
+                <td>Media integration; video</td>
+              </tr>
+              <tr>
+                <td>Model gallery with visual thumbnails and &ldquo;Load in Viewer&rdquo; buttons</td>
+                <td>Gallery/selector; visual design</td>
+              </tr>
+              <tr>
+                <td>WCAG 2.1 AA &mdash; skip link, ARIA labels, focus-visible, reduced-motion</td>
+                <td>Accessibility</td>
+              </tr>
+              <tr>
+                <td>Page Visibility API + DPR cap + debounced resize + PMREM disposal</td>
+                <td>Performance optimisations</td>
+              </tr>
+              <tr>
+                <td>NEXVOLT original fictional brand (not the Coca-Cola lab template)</td>
+                <td>Originality; not a direct copy</td>
+              </tr>
+              <tr>
+                <td>This About page with full design rationale</td>
+                <td>Documentation; reflective writing</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand" aria-label="NEXVOLT">NEXVOLT</div>
+      <p class="footer-tagline">Pure Energy. Zero Limits.</p>
+      <div class="footer-divider" aria-hidden="true"></div>
+      <p class="footer-meta">
+        3D Web Application &nbsp;&bull;&nbsp; University Assignment &nbsp;&bull;&nbsp; 2026
+      </p>
+      <p class="footer-tech">
+        Built with THREE.js &nbsp;&bull;&nbsp; WebGL &nbsp;&bull;&nbsp; Vanilla JavaScript
+      </p>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html" class="footer-link">&larr; Back to Viewer</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>

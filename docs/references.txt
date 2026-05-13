@@ -1,0 +1,84 @@
+NEXVOLT 3D Product Viewer — References & Sources
+==================================================
+
+3D Rendering Library
+--------------------
+Three.js r128 — MIT Licence
+https://threejs.org
+Cabello, R. et al. (2010–2026). Three.js. GitHub.
+https://github.com/mrdoob/three.js
+
+Post-Processing
+---------------
+THREE.EffectComposer, THREE.UnrealBloomPass, THREE.RenderPass,
+THREE.ShaderPass — bundled with Three.js r128.
+https://threejs.org/docs/#examples/en/postprocessing/EffectComposer
+
+Shading Reference
+-----------------
+Schlick, C. (1994). An Inexpensive BRDF Model for Physically-based
+Rendering. Computer Graphics Forum, 13(3), 233–246.
+  — referenced for the Fresnel rim-glow approximation.
+
+Tone Mapping
+------------
+ACES Filmic Tone Mapping (Hill & Narkowicz, 2012).
+https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/
+
+Physically-Based Rendering
+--------------------------
+Burley, B. (2012). Physically Based Shading at Disney. SIGGRAPH 2012
+Course Notes. Walt Disney Animation Studios.
+
+Image-Based Lighting / PMREM
+-----------------------------
+Lagarde, S. & de Rousiers, C. (2014). Moving Frostbite to Physically
+Based Rendering. SIGGRAPH 2014 Course Notes.
+https://seblagarde.wordpress.com/2015/07/14/siggraph-2014-moving-frostbite-to-physically-based-rendering/
+
+Web Audio API
+-------------
+Mozilla Developer Network. (2026). Web Audio API.
+https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
+
+Accessibility
+-------------
+W3C. (2018). Web Content Accessibility Guidelines (WCAG) 2.1.
+https://www.w3.org/TR/WCAG21/
+
+MDN Web Docs — ARIA Live Regions.
+https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions
+
+CSS / Layout
+------------
+MDN Web Docs — CSS Grid Layout.
+https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout
+
+MDN Web Docs — CSS Custom Properties.
+https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+
+Page Visibility API
+-------------------
+MDN Web Docs — Page Visibility API.
+https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
+
+IntersectionObserver
+--------------------
+MDN Web Docs — IntersectionObserver API.
+https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+
+Typeface
+--------
+Poppins — SIL Open Font Licence 1.1.
+Indian Type Foundry & Jonny Pinhorn via Google Fonts.
+https://fonts.google.com/specimen/Poppins
+
+3D Models
+---------
+All NEXVOLT GLB models (nexvolt_slim_can.glb, nexvolt_bottle.glb,
+nexvolt_crushed.glb) are original work created in Blender 4.x by the
+project author.  No third-party model assets were used.
+
+Blender — GNU GPL v2+
+https://www.blender.org
+
