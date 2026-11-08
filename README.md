@@ -2,8 +2,6 @@
 
 A cinematic, interactive 3D product showcase built with Three.js and WebGL. Renders three NEXVOLT energy drink variants in real-time with physically-based materials, image-based lighting, a custom GLSL rim-glow shader, and Unreal Engine-style bloom post-processing — entirely in the browser with no server required.
 
-> University Web 3D Application Assignment — 2026
-
 ---
 
 ## Technologies
